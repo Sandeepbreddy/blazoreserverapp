@@ -13,34 +13,57 @@ else
 {
     <div>
     <h3 class="bg-color-height">My Active Surveys</h3>
-    <stong>@OperatorInfo</stong>
-    <Table Items="activeSurveys">
-        <Columns>
-            <Column Name="survey_title" Label="Survey Name"></Column>
-            <Column Name="capi_stop_date" Label="Due Date"></Column>
-            <Column Name="status" Label="Status"></Column>
-        </Columns>
-    </Table>
-</div>
-    <div>
-        <h3 class="bg-color-height">My Upcoming Surveys</h3>
-        <Table Items="upcomingSurveys">
-            <Columns>
-                <Column Name="survey_title" Label="Survey Name"></Column>
-                <Column Name="capi_stop_date" Label="Due Date"></Column>
-                <Column Name="status" Label="Status"></Column>
-            </Columns>
-        </Table>
+    <stong>@surveyOperator.oper_name @surveyOperator.whole_name - @surveyOperator.state_alpha -
+        @surveyOperator.state_id
+    </stong>
+    @if (activeSurveys == null)
+        {
+            <p>No active surveys to display</p>
+        }
+        else
+        {
+            <Table Items="activeSurveys">
+                <Columns>
+                    <Column Name="survey_title" Label="Survey Name"></Column>
+                    <Column Name="capi_stop_date" Label="Due Date"></Column>
+                    <Column Name="status" Label="Status"></Column>
+                </Columns>
+            </Table>
+        }
     </div>
     <div>
-        <h3 class="bg-color-height">My Past Surveys</h3>
-        <Table Items="pastSurveys">
-            <Columns>
-                <Column Name="survey_title" Label="Survey Name"></Column>
-                <Column Name="capi_stop_date" Label="Due Date"></Column>
-                <Column Name="status" Label="Status"></Column>
-            </Columns>
-        </Table>
+    <h3 class="bg-color-height">My Upcoming Surveys</h3>
+    @if (upcomingSurveys == null)
+        {
+            <p>No upcoming surveys to display</p>
+        }
+        else
+        {
+            <Table Items="upcomingSurveys">
+                <Columns>
+                    <Column Name="survey_title" Label="Survey Name"></Column>
+                    <Column Name="capi_stop_date" Label="Due Date"></Column>
+                    <Column Name="status" Label="Status"></Column>
+                </Columns>
+            </Table>
+        }
+    </div>
+    <div>
+    <h3 class="bg-color-height">My Past Surveys</h3>
+    @if (pastSurveys == null)
+        {
+            <p>No past surveys to display</p>
+        }
+        else
+        {
+            <Table Items="pastSurveys">
+                <Columns>
+                    <Column Name="survey_title" Label="Survey Name"></Column>
+                    <Column Name="capi_stop_date" Label="Due Date"></Column>
+                    <Column Name="status" Label="Status"></Column>
+                </Columns>
+            </Table>
+        }
     </div>
 }
 
@@ -53,9 +76,11 @@ else
     private List<SurveyDetails> activeSurveys;
     private List<SurveyDetails> upcomingSurveys;
     private List<SurveyDetails> pastSurveys;
+    private SurveyOperator surveyOperator;
 
     protected override async Task OnInitializedAsync()
     {
+        surveyOperator = await SurveyService.GetSurveyOperatorAsync();
         surveys = await SurveyService.GetSurveyDetailsAsync();
 
         activeSurveys = surveys.Where(x => DateTime.Parse(x.survey_date) < DateTime.Now
@@ -66,5 +91,6 @@ else
 
         pastSurveys = surveys.Where(x => DateTime.Parse(x.survey_date) < DateTime.Now
         && DateTime.Parse(x.due_date) < DateTime.Now).ToList();
+
     }
 }
