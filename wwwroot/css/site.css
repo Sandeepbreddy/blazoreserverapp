@@ -77,3 +77,9 @@ a,
     align-items: center;
     color: #1E6068;
 }
+
+.operatorInfo {
+    color: #155158;
+    font-size: 26px;
+    font-weight: bold;
+}

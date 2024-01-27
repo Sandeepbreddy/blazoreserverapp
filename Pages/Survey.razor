@@ -13,12 +13,13 @@ else
 {
     <div>
     <h3 class="bg-color-height">My Active Surveys</h3>
-    <stong>@surveyOperator.oper_name @surveyOperator.whole_name - @surveyOperator.state_alpha -
+    <p class="container operatorInfo">@surveyOperator.oper_name @surveyOperator.whole_name -
+        @surveyOperator.state_alpha -
         @surveyOperator.state_id
-    </stong>
-    @if (activeSurveys == null)
+    </p>
+    @if (activeSurveys.Count == 0)
         {
-            <p>No active surveys to display</p>
+            <p class="container">No active surveys to display</p>
         }
         else
         {
@@ -33,9 +34,9 @@ else
     </div>
     <div>
     <h3 class="bg-color-height">My Upcoming Surveys</h3>
-    @if (upcomingSurveys == null)
+    @if (upcomingSurveys.Count == 0)
         {
-            <p>No upcoming surveys to display</p>
+            <p class="container">No upcoming surveys to display</p>
         }
         else
         {
@@ -50,9 +51,9 @@ else
     </div>
     <div>
     <h3 class="bg-color-height">My Past Surveys</h3>
-    @if (pastSurveys == null)
+    @if (pastSurveys.Count == 0)
         {
-            <p>No past surveys to display</p>
+            <p class="container">No past surveys to display</p>
         }
         else
         {
@@ -68,14 +69,7 @@ else
 }
 
 @code {
-
-    [Parameter]
-    public string? OperatorInfo { get; set; }
-    private List<SurveyDetails> surveys;
-
-    private List<SurveyDetails> activeSurveys;
-    private List<SurveyDetails> upcomingSurveys;
-    private List<SurveyDetails> pastSurveys;
+    private List<SurveyDetails> surveys, activeSurveys, upcomingSurveys, pastSurveys;
     private SurveyOperator surveyOperator;
 
     protected override async Task OnInitializedAsync()
