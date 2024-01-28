@@ -1,7 +1,14 @@
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+
 @if (Item == null)
 {
-    <th>@Label</th>
-
+    MemberInfo myprop = typeof(SurveyDetails).GetProperty(Name) as MemberInfo;
+    var field = @myprop.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+    if (field != null)
+    {
+        <th>@field.Name</th>
+    }
 }
 else
 {
@@ -11,9 +18,9 @@ else
 @code {
     [Parameter]
     public string Name { get; set; }
-
-    [Parameter]
-    public string Label { get; set; }
+    @*
+[Parameter]
+public string Label { get; set; } *@
 
     [CascadingParameter]
     public SurveyDetails Item { get; set; }

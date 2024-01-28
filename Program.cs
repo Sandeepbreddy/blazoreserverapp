@@ -12,7 +12,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddHttpClient<ISurveyService, SurveyService>(client =>
     {
         client.BaseAddress = new Uri("https://my.api.mockaroo.com");
-        client.DefaultRequestHeaders.Add("X-API-Key", "ceeaad40");
+        client.DefaultRequestHeaders.Add("X-API-Key", "e136bd10");
     });
 
 var app = builder.Build();

@@ -54,7 +54,7 @@ public class SurveyService : ISurveyService
                 survey_subtitle = item.survey_subtitle,
                 survey_date = item.survey_date,
                 status = item.status,
-                capi_stop_date = $"Submit by: {item.capi_stop_date}",
+                capi_stop_date = $"Submit by: {DateTime.Parse(item.capi_stop_date).ToShortDateString()}",
                 due_date = item.capi_stop_date
             };
             surveyDetails.Add(surveyObj);
